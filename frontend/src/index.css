@@ -1,0 +1,33 @@
+body {
+  font-family: sans-serif;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+.error {
+  color: red;
+}
+
+.group {
+  background: #f0f0f0;
+  padding: 8px;
+  margin-bottom: 6px;
+  border-radius: 4px;
+}
