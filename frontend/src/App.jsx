@@ -9,7 +9,7 @@ export default function App() {
 
   async function handleSubmit() {
   const words = input.split(",")
-    .map(w => w.trim()) //eliminate spaces
+    .map(w => w.trim()) //delete the spaces
     .filter(Boolean) //elimina elementele nule daca exista
   const response = await fetch(`${API_URL}/api/anagrams`, {
     method: "POST",
@@ -49,7 +49,7 @@ async function handleHistory() {
 
       <ul>
         {history.map((item) =>(
-          <li key={item.id}>{item.words.join(", ")}</li>
+          <li key={item.id}>{item.words.join(", ") + "     ----   " + new Date(item.created_at).toLocaleString()}</li>
         ))}
       </ul>
     </div>
