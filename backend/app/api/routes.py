@@ -6,11 +6,18 @@ bp = Blueprint("main", __name__)
 @bp.route("/api/anagrams", methods=["POST"])
 def process_anagrams():
     data = request.get_json()
-# TODO validate the input
+
+#  validate the input
+    if not data:
+        return jsonify({"You need to put some input"})
+    
     words = data["words"]
     result = anagram_service.process_words(words)
-    # TODO if the string is in db it should return 200
-    return jsonify(result), 201
+
+    #  if the string is in db it should return 200
+    status = 201
+    if result["seen"]:  status = 200
+    return jsonify(result), status
 
 
 @bp.route("/api/history", methods=["GET"])
