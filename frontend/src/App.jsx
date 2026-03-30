@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const API_URL = "http://127.0.0.1:5000"
+const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000" 
 
 export default function App() {
   const [input, setInput] = useState("")
@@ -8,7 +8,9 @@ export default function App() {
   const [history, setHistory] = useState([])
 
   async function handleSubmit() {
-  const words = input.split(",").map(w => w.trim()).filter(Boolean)
+  const words = input.split(",")
+    .map(w => w.trim()) //eliminate spaces
+    .filter(Boolean) //elimina elementele nule daca exista
   const response = await fetch(`${API_URL}/api/anagrams`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
