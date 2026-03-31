@@ -2,6 +2,7 @@ from app.repositories import anagram_repository
 from app.anagram import calculate_key, anagrams
 
 def process_words(words):
+    words = [w.lower() for w in words]
     key = calculate_key(words)
     
     # seen = db_session.query(AnagramResult).filter_by(key=key).first() 
