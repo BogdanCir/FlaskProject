@@ -20,6 +20,8 @@ def process_anagrams():
     return jsonify(result), status
 
 
+
 @bp.route("/api/history", methods=["GET"])
 def get_history():
     return jsonify(anagram_service.get_history()), 200
+  

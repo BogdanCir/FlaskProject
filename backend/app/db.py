@@ -1,9 +1,11 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker, declarative_base
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 
-engine = create_engine("sqlite:///anagrams.db")# we connect to our engine SQLite
+# engine = create_engine("sqlite:///anagrams.db")# we connect to our engine SQLite
+engine = create_engine(os.environ.get("DATABASE_URL", "sqlite:///anagrams.db"))
 
 # how we talk with the db, scoped session means that for every http request it will create one separate session
 db_session = scoped_session(sessionmaker(
