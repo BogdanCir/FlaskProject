@@ -25,8 +25,25 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
-      - run: |
-          docker build -t anagram-backend ./backend
-          docker build -t anagram-frontend ./frontend
+
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Build and push backend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend #the folder which docker is using for build
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/flask-backend:latest
+
+      - name: Build and push frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/flask-frontend:latest
