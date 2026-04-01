@@ -1,6 +1,7 @@
 import { useState } from "react"
 
-const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000" 
+// const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000" 
+const API_URL = "https://flask-backend-production-c1c9.up.railway.app"
 
 export default function App() {
   const [input, setInput] = useState("")
