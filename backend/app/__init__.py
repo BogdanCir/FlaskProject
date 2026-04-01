@@ -4,7 +4,7 @@ from app.db import db_session
 
 def create_app(testing=False):
     app = Flask(__name__)
-    CORS(app)
+    CORS(app, origins=["https://flask-backend-production-c1c9.up.railway.app"])
 
     if testing:
         app.config["TESTING"] = True
