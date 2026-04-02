@@ -25,6 +25,13 @@ ul {
   color: red;
 }
 
+.seen {
+  color: #b45309;
+  background: #fef9c3;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
 .group {
   background: #f0f0f0;
   padding: 8px;

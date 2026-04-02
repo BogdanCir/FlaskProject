@@ -7,22 +7,47 @@ export default function App() {
   const [input, setInput] = useState("")
   const [result, setResult] = useState(null)
   const [history, setHistory] = useState([])
+  const [error, setError] = useState(null)
 
   async function handleSubmit() {
   const words = input.split(",")
     .map(w => w.trim()) //delete the spaces
     .filter(Boolean) //elimina elementele nule daca exista
-  const response = await fetch(`${API_URL}/api/anagrams`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ words })
-  })
-  setResult(await response.json())
-}
+
+  if(words.length === 0){
+    setError("Enter at least one word")
+    return
+  }
+
+
+  try{
+    const response = await fetch(`${API_URL}/api/anagrams`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ words })
+    })
+    const data = await response.json()
+
+    if (!response.ok) {
+      setError(data.error || "Server error")
+      return
+    }
+    setResult(data)
+    setError(null)
+  }catch{
+    setError("Could not connect to the server")
+  }
+  }
 
 async function handleHistory() {
-  const response = await fetch(`${API_URL}/api/history`)
-  setHistory(await response.json())
+  try {
+    const response = await fetch(`${API_URL}/api/history`)
+    if (!response.ok){throw new Error("Failed to load history")}
+    setHistory(await response.json())
+    setError(null)
+  }catch{
+    setError("Could not load history")
+  }
 }
 
   return (
@@ -35,10 +60,15 @@ async function handleHistory() {
         value={input}
         onChange={function (e) {
           setInput(e.target.value)
+          if(error) setError(null)
         }}
       />
 
       <button onClick={handleSubmit}>Process</button>
+
+      {error && <p className="error">{error}</p>}
+      
+      {result && result.seen && (<p className="seen">Result loaded from db</p>)}
 
       {result && result.result.map((group, i) => (
         <div key={i}>{group.join(", ")}</div>
