@@ -29,5 +29,11 @@ def process_anagrams():
 
 @bp.route("/api/history", methods=["GET"])
 def get_history():
-    return jsonify(anagram_service.get_history()), 200
+    word = request.args.get("word")
+    sort = request.args.get("sort", "desc").lower()
+    if sort not in ["asc", "desc"]:
+        return jsonify({"error": "sort must be asc or desc"}), 400
+    result = anagram_service.get_history(word=word, sort=sort)
+    return jsonify(result),200
+    # return jsonify(anagram_service.get_history()), 200
   

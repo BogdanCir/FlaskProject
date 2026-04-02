@@ -27,3 +27,13 @@ def save(key, words, result):
 
 def get_all():
     return AnagramResult.query.order_by(AnagramResult.created_at.desc()).all()
+
+def get_filtred_history(word=None, sort="desc"):
+    query = AnagramResult.query
+
+    if word:
+        query = query.filter(AnagramResult.words.ilike(f'%"{word.lower()}"%')) #WHERE words ILIKE '%"word"%' , case insensitive (ilike)
+    if sort =="asc":
+        query = query.order_by(AnagramResult.created_at.asc())
+    else: query = query.order_by(AnagramResult.created_at.desc())
+    return query.all()

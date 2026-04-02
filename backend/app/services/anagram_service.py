@@ -20,6 +20,7 @@ def process_words(words):
         "seen": False
     }
 
-def get_history():
-    results = anagram_repository.get_all()
+def get_history(word = None, sort="desc"):
+    # results = anagram_repository.get_all()
+    results = anagram_repository.get_filtred_history(word=word, sort=sort)
     return [result.to_dict() for result in results]
